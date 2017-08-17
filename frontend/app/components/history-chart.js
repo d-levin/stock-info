@@ -72,10 +72,15 @@ export default Ember.Component.extend({
             this.send('renderPlot', data)
           }
         })
-        .catch(error => this.set('fetchError',
-            `${error.message}` + (error.payload.message ? `: ${error.payload.message}` : '')
-          )
-        )
+        .catch(error => {
+          const {
+            message: errorMessage = 'An unknown error occurred',
+            payload: {
+              message: errorDetails = ''
+            } = {}
+          } = error || {}
+          this.set('fetchError', `${errorMessage}` + (errorDetails ? `: ${errorDetails}` : ''))
+        })
         .then(() => this.set('loading', false))
     },
 
