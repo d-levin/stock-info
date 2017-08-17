@@ -25,6 +25,7 @@ The QuantPrice API also limits the number of requests within a given period of t
 1. Process the response from https://quantprice.herokuapp.com/api/v1.1/ directly in the backend Java code rather than in the frontend JavaScript code
 2. Take advantage of Ember's services, serializers, and models to fetch data rather than using Ajax in the controllers
 3. Split the Stocks component into several smaller components and pass props and emit events to communicate between them. Suggestions: search-bar, data-table, pagination
+4. Add progress bars when APIs are loading
 
 ---
 
