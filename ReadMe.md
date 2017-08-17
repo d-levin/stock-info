@@ -16,7 +16,7 @@
 ### Notes
 The Yahoo Finance API is no longer active. Instead, this application uses https://quantprice.herokuapp.com/api/v1.1/.
 
-The QuantPrice API does not seem to support many of the stock symbols in the database. These will not render graphs.
+The QuantPrice API does not seem to support many of the stock symbols in the database. These will not render graphs. One that works is AAPL (Apple Inc).
 
 The QuantPrice API also limits the number of requests within a given period of time. It is likely that a request for historical data will error out if too many requests are made within a short period of time.
 
