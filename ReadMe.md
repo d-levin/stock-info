@@ -1,5 +1,9 @@
 # Stock Info
 
+### Prerequisites
+1. `JDK`
+2. `npm`
+
 ### Running the project
 1. Clone or download the repository
 2. `cd resources`
