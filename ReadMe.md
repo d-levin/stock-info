@@ -8,6 +8,7 @@
 5. `./gradlew clean build run` (starts the backend services on port 9000)
 6. `cd ../frontend`
 7. `npm run startWithProxy` (starts the Ember application with requests proxied to http://localhost:9000)
+8. Open the app in a browser at `http://localhost:4200`
 
 ---
 
