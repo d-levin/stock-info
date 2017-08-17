@@ -1,0 +1,22 @@
+body {
+  padding-top: 70px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.non-selectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.no-margins {
+  margin: 0;
+}
+
+.display-inline-block {
+  display: inline-block;
+}

@@ -1,0 +1,15 @@
+<div class="text-center">
+  {{#if loading}}
+    <p class="text-info">Loading...</p>
+  {{else if fetchError}}
+    <div>
+      <p class="text-danger">Could not load stock price history.</p>
+      <p class="text-danger">[{{fetchError}}]</p>
+      <button class="btn btn-light btn-sm" onclick={{action "fetchStockHistory"}}>Try again</button>
+    </div>
+  {{else if noData}}
+    <p class="text-warning">No stock price history found for {{stock.symbol}}</p>
+  {{/if}}
+
+  <div id="chart-div" style="width: 90vh; margin: auto;"></div>
+</div>

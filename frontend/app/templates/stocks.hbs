@@ -1,0 +1,124 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="form-group">
+        <label>Search by name</label>
+        <div class="input-group">
+          {{input
+            aria-label="Name"
+            class="form-control"
+            placeholder="Name"
+            type="text"
+            value=query
+          }}
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" {{action "fetchStocks"}}>
+              Search
+            </button>
+            <button class="btn btn-secondary" type="button" {{action "clearQuery"}}>
+              Clear
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              {{#each tableHeaders as |tableHeader| }}
+                <th
+                  class="cursor-pointer non-selectable"
+                  onclick={{action "sort" tableHeader.key}}
+                  style={{if tableHeader.style tableHeader.style}}
+                >
+                  <span>{{tableHeader.label}}</span>
+                  {{#if (equals sortColumn tableHeader.key)}}
+                    <div class="{{if (equals sortDirection 1) "dropup" "dropdown"}} display-inline-block">
+                      <span class="caret"></span>
+                    </div>
+                  {{/if}}
+                </th>
+              {{/each}}
+            </tr>
+          </thead>
+          <tbody>
+            {{#if loading}}
+              <tr>
+                <td class="text-center text-warning" colspan={{tableHeadersLength}}>
+                  <span>Loading...</span>
+                </td>
+              </tr>
+            {{else if fetchError}}
+              <tr>
+                <td class="text-center text-danger" colspan={{tableHeadersLength}}>
+                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                  <span>Could not load stocks</span>
+                </td>
+              </tr>
+            {{else if noData}}
+              <tr>
+                <td class="text-center text-warning" colspan={{tableHeadersLength}}>
+                  <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                  <span>No matching results</span>
+                </td>
+              </tr>
+            {{else}}
+              {{#each stocks as |stock|}}
+                <tr onclick={{action "selectStockAndOpenModal" stock}} class="cursor-pointer">
+                  <td>{{stock.symbol}}</td>
+                  <td>{{stock.name}}</td>
+                </tr>
+              {{/each}}
+            {{/if}}
+          </tbody>
+        </table>
+        <div class="panel-footer" class="text-right">
+          {{#if hasMeta}}
+            <nav aria-label="Pager">
+              <ul class="pagination pagination-sm no-margins">
+                <li class="cursor-pointer non-selectable {{if cannotGoToPreviousPage "disabled"}}">
+                  <a onclick={{action "firstPage"}}>
+                    <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span> First page
+                  </a>
+                </li>
+                <li class="cursor-pointer non-selectable {{if cannotGoToPreviousPage "disabled"}}">
+                  <a onclick={{action "previousPage"}}>
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Previous page
+                  </a>
+                </li>
+                <li>
+                  {{#if (equals paginationMetaData.totalPages 0)}}
+                    <span>-</span>
+                  {{else}}
+                    <span>{{ pageNumber }} / {{ paginationMetaData.totalPages }}</span>
+                  {{/if}}
+                </li>
+                <li class="cursor-pointer non-selectable {{if cannotGoToNextPage "disabled"}}">
+                  <a onclick={{action "nextPage"}}>
+                    Next page <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                  </a>
+                </li>
+                <li class="cursor-pointer non-selectable {{if cannotGoToNextPage "disabled"}}">
+                  <a onclick={{action "lastPage"}}>
+                    Last page <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{#if modal}}
+    {{#bs-modal-simple open=modal closeTitle="Close" onHidden=(action "clearSelectedStockAndCloseModal") size="lg"}}
+      {{#history-chart stock=selectedStock}}{{/history-chart}}
+    {{/bs-modal-simple}}
+  {{/if}}
+</div>
